@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="250.0" maxWidth="450.0" minHeight="250.0" minWidth="450.0" orientation="VERTICAL" prefHeight="250.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="">
+<FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="250.0" maxWidth="450.0" minHeight="250.0" minWidth="450.0" orientation="VERTICAL" prefHeight="250.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.aritzherrero.proyectoolimpiadas.Control.ControlAniadirEquipo">
     <children>
         <GridPane alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="125.0" prefWidth="400.0">
             <columnConstraints>

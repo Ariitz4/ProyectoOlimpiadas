@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="300.0" maxWidth="450.0" minHeight="300.0" minWidth="450.0" orientation="VERTICAL" prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="">
+<FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="300.0" maxWidth="450.0" minHeight="300.0" minWidth="450.0" orientation="VERTICAL" prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.aritzherrero.proyectoolimpiadas.Control.ControlAniadirOlimpiada">
     <children>
         <GridPane alignment="CENTER" maxHeight="175.0" maxWidth="400.0" minHeight="175.0" minWidth="400.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="175.0" prefWidth="400.0">
             <columnConstraints>

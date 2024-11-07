@@ -18,7 +18,7 @@ public class HelloApplication extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         try {
-            root = (FlowPane)FXMLLoader.load(getClass().getResource("/fxml/VentanaGeneral.fxml"));
+            root = (FlowPane)FXMLLoader.load(getClass().getResource("fxml/ventanaPrincipal.fxml"));
             stage.setTitle("OLIMPIADAS");
             Scene scene = new Scene(root,1000,600);
             stage.setScene(scene);

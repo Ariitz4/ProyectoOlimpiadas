@@ -12,7 +12,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.FlowPane?>
 
-<FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="">
+<FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.aritzherrero.proyectoolimpiadas.Control.ControlOlimpiada">
     <children>
         <MenuBar prefWidth="800.0">
             <menus>
