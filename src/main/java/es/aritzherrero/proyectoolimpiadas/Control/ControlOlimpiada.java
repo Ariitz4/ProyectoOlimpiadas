@@ -1,4 +1,5 @@
 package es.aritzherrero.proyectoolimpiadas.Control;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -28,8 +29,15 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Controlador para gestionar las operaciones relacionadas con las olimpiadas.
+ * Este procedimiento permite añadir, modificar, eliminar y filtrar las olimpiadas en la interfaz de usuario.
+ * Además, se encarga de la interacción con la base de datos a través del objeto OlimpiadaDAO.
+ * La clase maneja las acciones del usuario en la tabla de olimpiadas y en los formularios de la aplicación.
+ *
 
-public class ControlOlimpiada implements Initializable{
+ */
+public class ControlOlimpiada implements Initializable {
 
     @FXML
     private ChoiceBox<String> cbBusqueda;
@@ -69,7 +77,7 @@ public class ControlOlimpiada implements Initializable{
 
     private PrincipalDAO pDao;
     private OlimpiadaDAO oDao;
-    private String[] campos = {"Nombre","Año","Temporada","Ciudad"};
+    private String[] campos = {"Nombre", "Año", "Temporada", "Ciudad"};
     static Olimpiada gOliModificar;
 
     public ControlOlimpiada() throws SQLException {
@@ -77,10 +85,9 @@ public class ControlOlimpiada implements Initializable{
         pDao = new PrincipalDAO();
     }
 
-
     /**
      * Abre la ventana para añadir una olimpiada.
-     * @param event
+     * @param event El evento que activa la acción de añadir una olimpiada.
      */
     @FXML
     void aniadirOlimpiada(ActionEvent event) {
@@ -89,52 +96,58 @@ public class ControlOlimpiada implements Initializable{
 
     /**
      * Filtra los registros dependiendo del campo del ChoiceBox y el texto del TextField.
-     * @param event
+     * @param event El evento de tecleo que activa la acción de filtrar la tabla.
      */
     @FXML
     void filtrar(KeyEvent event) {
         String campoSeleccionado = cbBusqueda.getSelectionModel().getSelectedItem();
         String txFiltro = tfBusqueda.getText().toString();
-        ObservableList<Olimpiada>listaFiltrada = oDao.filtrarOlimpiada(campoSeleccionado, txFiltro);
+        ObservableList<Olimpiada> listaFiltrada = oDao.filtrarOlimpiada(campoSeleccionado, txFiltro);
         cargarTabla(listaFiltrada);
     }
 
-
+    /**
+     * Abre la ventana para modificar una olimpiada seleccionada en la tabla.
+     * @param event El evento que activa la acción de modificar una olimpiada.
+     */
     @FXML
     void modificar(ActionEvent event) {
         gOliModificar = tvTabla.getSelectionModel().getSelectedItem();
         ventanaSecundaria("aniadirOlimpiada", "MODIFICAR OLIMPIADA", 380, 460);
-        ObservableList<Olimpiada>listaOlimpiadas= oDao.cargarOlimpiada();
+        ObservableList<Olimpiada> listaOlimpiadas = oDao.cargarOlimpiada();
         tvTabla.setItems(listaOlimpiadas);
-        gOliModificar=null;
+        gOliModificar = null;
     }
 
+    /**
+     * Elimina la olimpiada seleccionada de la base de datos.
+     * @param event El evento que activa la acción de eliminar una olimpiada.
+     */
     @FXML
     void eliminar(ActionEvent event) {
         Olimpiada o = tvTabla.getSelectionModel().getSelectedItem();
 
         boolean resultado = pDao.eliminar("Olimpiada", "id_olimpiada", o.getIdOlimpiada());
         if (resultado) {
-            ControlPrincipal.ventanaAlerta("I", "olimpiada eliminada con éxito");
-        }else {
-            ControlPrincipal.ventanaAlerta("E", "no se pudo eliminar la olimpiada");
+            ControlPrincipal.ventanaAlerta("I", "Olimpiada eliminada con éxito");
+        } else {
+            ControlPrincipal.ventanaAlerta("E", "No se pudo eliminar la olimpiada");
         }
-
     }
 
     /**
-     * Carga los campos del ChoiceBox y sincroniza la tabla con la BBDD.
+     * Inicializa la vista, carga los campos del ChoiceBox y sincroniza la tabla con la base de datos.
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         cbBusqueda.getItems().addAll(campos);
-        ObservableList<Olimpiada>olimpiadas = oDao.cargarOlimpiada();
+        ObservableList<Olimpiada> olimpiadas = oDao.cargarOlimpiada();
         cargarTabla(olimpiadas);
     }
 
     /**
-     * Sincroniza los campos de la tabla con los de la BBDD y añade olimpiadas a la tabla.
-     * @param olimpiadas
+     * Sincroniza los campos de la tabla con los de la base de datos y añade olimpiadas a la tabla.
+     * @param olimpiadas Lista de olimpiadas a mostrar en la tabla.
      */
     private void cargarTabla(ObservableList<Olimpiada> olimpiadas) {
         tcNombre.setCellValueFactory(new PropertyValueFactory<Olimpiada, String>("nombre"));
@@ -146,18 +159,18 @@ public class ControlOlimpiada implements Initializable{
     }
 
     /**
-     * Abrir ventana auxiliar.
-     * @param f fxml
-     * @param t titulo
-     * @param altura
-     * @param anchura
+     * Abre una ventana secundaria (como un formulario o una ventana de operación adicional).
+     * @param f Nombre del archivo FXML de la ventana.
+     * @param t Título de la ventana.
+     * @param altura Altura de la ventana en píxeles.
+     * @param anchura Anchura de la ventana en píxeles.
      */
-    private void ventanaSecundaria(String f, String t,Integer altura,Integer anchura) {
+    private void ventanaSecundaria(String f, String t, Integer altura, Integer anchura) {
         Stage stage = new Stage();
         try {
-            FlowPane flwPanel = FXMLLoader.load(HelloApplication.class.getResource("fxml/"+f+".fxml"));
+            FlowPane flwPanel = FXMLLoader.load(HelloApplication.class.getResource("fxml/" + f + ".fxml"));
             stage.setTitle(t);
-            Scene scene = new Scene(flwPanel,altura,anchura);
+            Scene scene = new Scene(flwPanel, altura, anchura);
             stage.setScene(scene);
             stage.setMinWidth(altura);
             stage.setMinHeight(anchura);
@@ -166,9 +179,8 @@ public class ControlOlimpiada implements Initializable{
             stage.getIcons().add(new Image(getClass().getResource("/img/imgOlimpiadas.jpg").toString()));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
-        }catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }

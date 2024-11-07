@@ -1,58 +1,63 @@
 package es.aritzherrero.proyectoolimpiadas.Conexion;
 
-import es.aritzherrero.proyectoolimpiadas.Modelo.Propiedades;
+
+
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.TimeZone;
-
+import java.util.Properties;
 /**
- * Clase encargada de gestionar la conexión a la base de datos.
- * Esta clase utiliza parámetros de configuración para establecer una conexión con la base de datos
- * y proporciona procedimientos para obtener y cerrar dicha conexión.
+ * Clase de conexión a la bbdd
+ *
+ * @author Aritz
  */
 public class ConexionBD {
-
-    private Connection conn;
+    private final Connection  conexion;
 
     /**
-     * Procedimiento que establece una conexión con la base de datos utilizando los valores
-     * de configuración obtenidos de la clase de propiedades.
+     * Es el constructor que se llama al crear un objeto de esta clase, lanzado la conexión
      *
-     * @throws SQLException si ocurre un error al intentar conectar con la base de datos.
+     * @throws java.sql.SQLException Hay que controlar errores de SQL
      */
     public ConexionBD() throws SQLException {
-        // Obtiene los parámetros de conexión de las propiedades de configuración
-        String host = Propiedades.getValor("host");
-        String baseDatos = Propiedades.getValor("bbdd");
-        String usuario = Propiedades.getValor("usuario");
-        String password = Propiedades.getValor("contrasena");
-
-        // Construye la cadena de conexión para el acceso a la base de datos
-        String cadenaConexion = "jdbc:mysql://" + host + "/" + baseDatos + "?serverTimezone=" + TimeZone.getDefault().getID();
-
-        // Establece la conexión con la base de datos
-        conn = DriverManager.getConnection(cadenaConexion, usuario, password);
-
-        // Configura la conexión para que el modo de auto-commit esté activo
-        conn.setAutoCommit(true);
+        // los parametros de la conexion
+        Properties connConfig = new Properties();
+        connConfig.setProperty("user", "root");
+        connConfig.setProperty("password", "mypass");
+        //la conexion en sí
+        conexion = DriverManager.getConnection("jdbc:mariadb://localhost:33066/personas?serverTimezone=Europe/Madrid", connConfig);
+        conexion.setAutoCommit(true);
+        DatabaseMetaData databaseMetaData = conexion.getMetaData();
+        //debug
+        System.out.println();
+        System.out.println("--- Datos de conexión ------------------------------------------");
+        System.out.printf("Base de datos: %s%n", databaseMetaData.getDatabaseProductName());
+        System.out.printf("  Versión: %s%n", databaseMetaData.getDatabaseProductVersion());
+        System.out.printf("Driver: %s%n", databaseMetaData.getDriverName());
+        System.out.printf("  Versión: %s%n", databaseMetaData.getDriverVersion());
+        System.out.println("----------------------------------------------------------------");
+        System.out.println();
+        conexion.setAutoCommit(true);
     }
 
     /**
-     * Procedimiento que devuelve la conexión actual a la base de datos.
+     * Esta clase devuelve la conexión creada
      *
-     * @return la conexión a la base de datos.
+     * @return una conexión a la BBDD
      */
     public Connection getConexion() {
-        return conn;
+        return conexion;
     }
 
     /**
-     * Procedimiento que cierra la conexión actual a la base de datos.
+     * Metodo de cerrar la conexion con la base de datos
      *
-     * @throws SQLException si ocurre un error al intentar cerrar la conexión.
+     * @return La conexión cerrada.
+     * @throws java.sql.SQLException Se lanza en caso de errores de SQL al cerrar la conexión.
      */
-    public void CloseConexion() throws SQLException {
-        this.conn.close();
+    public Connection CloseConexion() throws SQLException{
+        conexion.close();
+        return conexion;
     }
 }
