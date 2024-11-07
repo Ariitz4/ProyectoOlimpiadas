@@ -1,6 +1,7 @@
 package es.aritzherrero.proyectoolimpiadas.Control;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import es.aritzherrero.proyectoolimpiadas.DAO.DeporteDAO;
@@ -62,12 +63,18 @@ public class ControlEvento implements Initializable{
     private TableView<Evento> tvTabla;
 
     // VARIABLES DE CLASE INSERTADAS MANUALMENTE \\
-    PrincipalDAO pDao = new PrincipalDAO();
-    EventoDAO eDao= new EventoDAO();
-    DeporteDAO dDao= new DeporteDAO();
+    PrincipalDAO pDao;
+    EventoDAO eDao;
+    DeporteDAO dDao;
     private String[]campos = {"Nombre","Olimpiada","Deporte"};
     static Evento gEveModificar;
     static Deporte gDepModificar;
+
+    public ControlEvento() throws SQLException {
+        dDao= new DeporteDAO();
+        eDao= new EventoDAO();
+        pDao = new PrincipalDAO();
+    }
 
     @FXML
     void aniadirDeporte(ActionEvent event) {

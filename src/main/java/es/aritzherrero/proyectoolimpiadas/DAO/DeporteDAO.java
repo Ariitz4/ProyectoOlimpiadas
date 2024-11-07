@@ -14,6 +14,12 @@ public class DeporteDAO {
     private ConexionBD conexion;
     private PrincipalDAO principal;
 
+    public DeporteDAO() throws SQLException {
+        conexion= new ConexionBD();
+        principal= new PrincipalDAO();
+    }
+    /**
+
     /**
      * Carga todos los registros de la tabla deporte.
      * @return lista de deportes.

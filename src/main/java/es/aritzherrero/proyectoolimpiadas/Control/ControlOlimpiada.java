@@ -1,6 +1,7 @@
 package es.aritzherrero.proyectoolimpiadas.Control;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import es.aritzherrero.proyectoolimpiadas.DAO.OlimpiadaDAO;
@@ -66,10 +67,16 @@ public class ControlOlimpiada implements Initializable{
     @FXML
     private TableView<Olimpiada> tvTabla;
 
-    private PrincipalDAO pDao = new PrincipalDAO();
-    private OlimpiadaDAO oDao = new OlimpiadaDAO();
+    private PrincipalDAO pDao;
+    private OlimpiadaDAO oDao;
     private String[] campos = {"Nombre","Año","Temporada","Ciudad"};
     static Olimpiada gOliModificar;
+
+    public ControlOlimpiada() throws SQLException {
+        oDao = new OlimpiadaDAO();
+        pDao = new PrincipalDAO();
+    }
+
 
     /**
      * Abre la ventana para añadir una olimpiada.

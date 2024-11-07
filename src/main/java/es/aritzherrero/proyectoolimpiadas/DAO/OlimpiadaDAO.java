@@ -13,6 +13,11 @@ public class OlimpiadaDAO {
     private ConexionBD conexion;
     private PrincipalDAO principal;
 
+
+    public OlimpiadaDAO() throws SQLException {
+        conexion= new ConexionBD();
+        principal= new PrincipalDAO();
+    }
     /**
      * Carga todos los registros de la tabla Olimpiada.
      * @return lista de olimpiadas.

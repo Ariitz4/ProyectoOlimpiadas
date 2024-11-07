@@ -38,7 +38,7 @@ public class HelloApplication extends Application {
 
         // Establecer el título e icono de la ventana
         stage.setTitle("Ejercicio G");
-        Image icono= new Image(getClass().getResourceAsStream("/imagen/imgOlimpiadas.png"));
+        Image icono= new Image(getClass().getResourceAsStream("/img/imgOlimpiadas.png"));
         stage.getIcons().add(icono);
 
         // Asignar la escena al stage y mostrar la ventana

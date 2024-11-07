@@ -2,8 +2,7 @@ package es.aritzherrero.proyectoolimpiadas.DAO;
 
 
 import es.aritzherrero.proyectoolimpiadas.Conexion.ConexionBD;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,8 +12,6 @@ import java.sql.SQLException;
 public class PrincipalDAO {
 
     private ConexionBD conexion;
-
-    // ESTAS CONSULTAS ESTÁN SIN ; AL FINAL PARA UTILIZARLAS EN DISTINTOS PROCESOS AÑADIENDOLES MÁS FILTROS \\
     public String consultaPrincipal = "SELECT Deportista.id_deportista,Evento.id_evento,Equipo.id_equipo,Deportista.nombre,Evento.nombre,Olimpiada.nombre,Deporte.nombre,Equipo.nombre,iniciales,edad,medalla "
             + "FROM Participacion,Deportista,Evento,Olimpiada,Deporte,Equipo "
             + "WHERE Deportista.id_deportista = Participacion.id_deportista "

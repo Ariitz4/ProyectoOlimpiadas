@@ -1,6 +1,7 @@
 package es.aritzherrero.proyectoolimpiadas.Control;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import es.aritzherrero.proyectoolimpiadas.DAO.*;
@@ -34,13 +35,23 @@ public class ControlAniadirParticipacion implements Initializable{
     @FXML
     private TextField tfEdad;
 
-    private PrincipalDAO pDao = new PrincipalDAO();
-    private ParticipacionDAO partiDao = new ParticipacionDAO();
-    private DeportistaDAO distaDao = new DeportistaDAO();
-    private EventoDAO evenDao = new EventoDAO();
-    private EquipoDAO equiDao= new EquipoDAO();
+    private PrincipalDAO pDao;
+    private ParticipacionDAO partiDao;
+    private DeportistaDAO distaDao;
+    private EventoDAO evenDao;
+    private EquipoDAO equiDao;
     private String[] medallas = {"Gold","Silver","Bronze","N/A"};
     private boolean modificar=false;
+    public ControlAniadirParticipacion() throws SQLException {
+        pDao = new PrincipalDAO();
+        partiDao = new ParticipacionDAO();
+        distaDao = new DeportistaDAO();
+        evenDao = new EventoDAO();
+        equiDao= new EquipoDAO();
+    }
+
+
+
 
     /**
      * Inserta los datos de la ventana en una participación y añadirá/modificará dependiendo desde donde se haya abierto la ventana.

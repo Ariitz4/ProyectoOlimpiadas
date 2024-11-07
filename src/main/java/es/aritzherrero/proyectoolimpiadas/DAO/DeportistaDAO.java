@@ -12,6 +12,12 @@ import java.sql.SQLException;
 public class DeportistaDAO {
     private ConexionBD conexion;
     private PrincipalDAO principal;
+
+    public DeportistaDAO() throws SQLException {
+        conexion= new ConexionBD();
+        principal= new PrincipalDAO();
+    }
+    /**
     /**
      * Carga todos los registros de la tabla Deportista.
      * @return {@link ObservableList} Deportista

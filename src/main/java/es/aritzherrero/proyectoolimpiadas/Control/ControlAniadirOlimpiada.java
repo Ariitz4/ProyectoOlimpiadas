@@ -1,6 +1,7 @@
 package es.aritzherrero.proyectoolimpiadas.Control;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import es.aritzherrero.proyectoolimpiadas.DAO.OlimpiadaDAO;
@@ -25,11 +26,17 @@ public class ControlAniadirOlimpiada implements Initializable{
     @FXML
     private ChoiceBox<String> cbTemporada;
 
-    private PrincipalDAO pDao = new PrincipalDAO();
-    private OlimpiadaDAO oDao = new OlimpiadaDAO();
+    private PrincipalDAO pDao;
+    private OlimpiadaDAO oDao;
     private String[] campos = {"Summer","Winter"};
     private Olimpiada o;
     private boolean modificar;
+
+    public ControlAniadirOlimpiada() throws SQLException {
+        oDao = new OlimpiadaDAO();
+        pDao = new PrincipalDAO();
+    }
+
 
     /**
      * Genera una olimpiada y la añade/modifica a la BBDD.

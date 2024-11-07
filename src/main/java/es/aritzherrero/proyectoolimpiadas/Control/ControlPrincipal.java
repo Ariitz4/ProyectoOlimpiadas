@@ -2,6 +2,7 @@ package es.aritzherrero.proyectoolimpiadas.Control;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import es.aritzherrero.proyectoolimpiadas.DAO.EquipoDAO;
@@ -89,13 +90,22 @@ public class ControlPrincipal implements Initializable{
     private TableView<Participacion> tvTabla;
 
     // VARIABLES DE CLASE INSERTADAS MANUALMENTE \\
-    private PrincipalDAO oDao = new PrincipalDAO();
-    private ParticipacionDAO pDao = new ParticipacionDAO();
-    private EquipoDAO equiDao= new EquipoDAO();
-    private EventoDAO evenDao = new EventoDAO();
+    private PrincipalDAO princDao;
+    private ParticipacionDAO partiDao;
+    private EquipoDAO equiDao;
+    private EventoDAO evenDao;
     private String[]campos = {"Deportista","Evento","Olimpiada","Deporte","Equipo","Abreviatura","Edad","Medalla"};
     static Participacion pModificar;
     static Equipo gEquipoModificar;
+
+    public ControlPrincipal() throws SQLException {
+        princDao = new PrincipalDAO();
+        partiDao = new ParticipacionDAO();
+        equiDao= new EquipoDAO();
+        evenDao = new EventoDAO();
+
+
+    }
 
     /**
      * Método para iniciar la tabla Deportista
@@ -172,7 +182,7 @@ public class ControlPrincipal implements Initializable{
     @FXML
     void aniadirParticipacion(ActionEvent event) {
         ventanaSecundaria("aniadirParticipacion", "AÑADIR PARTICIPACION", 500, 450);
-        ObservableList<Participacion>participaciones = pDao.cargarParticipacion();
+        ObservableList<Participacion>participaciones = partiDao.cargarParticipacion();
         cargarTabla(participaciones);
     }
 
@@ -185,7 +195,7 @@ public class ControlPrincipal implements Initializable{
 
         String campoSeleccionado = cbBusqueda.getSelectionModel().getSelectedItem();
         String txFiltro = tfBusqueda.getText().toString();
-        ObservableList<Participacion>listaFiltrada = pDao.filtrarParticipaciones(campoSeleccionado, txFiltro);
+        ObservableList<Participacion>listaFiltrada = partiDao.filtrarParticipaciones(campoSeleccionado, txFiltro);
         cargarTabla(listaFiltrada);
     }
 
@@ -198,7 +208,7 @@ public class ControlPrincipal implements Initializable{
         pModificar = tvTabla.getSelectionModel().getSelectedItem();
         ventanaSecundaria("aniadirParticipacion", "MODIFICAR PARTICIPACION", 500, 450);
         pModificar=null;
-        ObservableList<Participacion>participaciones = pDao.cargarParticipacion();
+        ObservableList<Participacion>participaciones = partiDao.cargarParticipacion();
         tvTabla.setItems(participaciones);
     }
 
@@ -216,35 +226,35 @@ public class ControlPrincipal implements Initializable{
     @FXML
     void eliminar(ActionEvent event) {
         Participacion p = tvTabla.getSelectionModel().getSelectedItem();
-        boolean resultado = pDao.eliminarParticipacion(p);
+        boolean resultado = partiDao.eliminarParticipacion(p);
         if (resultado) {
             ControlPrincipal.ventanaAlerta("I", "Participación eliminada con éxito");
-            Integer contD = oDao.buscarRegistros("Participacion","id_deportista",p.getIdDeportista());
-            Integer contEq = oDao.buscarRegistros("Participacion","id_equipo",p.getIdEquipo());
-            Integer contEv = oDao.buscarRegistros("Participacion","id_equipo",p.getIdEvento());
+            Integer contD = princDao.buscarRegistros("Participacion","id_deportista",p.getIdDeportista());
+            Integer contEq = princDao.buscarRegistros("Participacion","id_equipo",p.getIdEquipo());
+            Integer contEv = princDao.buscarRegistros("Participacion","id_equipo",p.getIdEvento());
 
             if (contEq==0) {
-                oDao.eliminar("Equipo", "id_equipo", p.getIdEquipo());
+                princDao.eliminar("Equipo", "id_equipo", p.getIdEquipo());
                 ControlPrincipal.ventanaAlerta("I", "El equipo se eliminó al eliminar el último registro vinculado");
             }
             if(contD==0) {
-                oDao.eliminar("Deportista", "id_deportista", p.getIdDeportista());
+                princDao.eliminar("Deportista", "id_deportista", p.getIdDeportista());
                 ControlPrincipal.ventanaAlerta("I", "El deportista se eliminó al eliminar el último registro vinculado");
             }
             if(contEv==0) {
                 Evento ev = evenDao.filtrarEvento("id_evento", p.getIdEvento()+"").get(0);
-                Integer contDe= oDao.buscarRegistros("Evento", "id_deporte", ev.getIdDeporte());
-                Integer contOl= oDao.buscarRegistros("Evento", "id_olimpiada", ev.getIdOlimpiada());
+                Integer contDe= princDao.buscarRegistros("Evento", "id_deporte", ev.getIdDeporte());
+                Integer contOl= princDao.buscarRegistros("Evento", "id_olimpiada", ev.getIdOlimpiada());
 
-                oDao.eliminar("Evento", "id_evento", p.getIdEvento());
+                princDao.eliminar("Evento", "id_evento", p.getIdEvento());
                 ControlPrincipal.ventanaAlerta("I", "El evento se eliminó al eliminar el último registro vinculado");
 
                 if(contDe==0) {
-                    oDao.eliminar("Deporte", "id_deporte", ev.getIdDeporte());
+                    princDao.eliminar("Deporte", "id_deporte", ev.getIdDeporte());
                     ControlPrincipal.ventanaAlerta("I", "El deporte se eliminó al eliminar el último registro vinculado");
                 }
                 if(contOl==0) {
-                    oDao.eliminar("Evento", "id_evento", ev.getIdOlimpiada());
+                    princDao.eliminar("Evento", "id_evento", ev.getIdOlimpiada());
                     ControlPrincipal.ventanaAlerta("I", "La olimpiada se eliminó al eliminar el último registro vinculado");
                 }
             }
@@ -252,7 +262,7 @@ public class ControlPrincipal implements Initializable{
         }else {
             ControlPrincipal.ventanaAlerta("E", "ELIMINE TODOS LOS REGISTROS ASOCIADOS");
         }
-        ObservableList<Participacion>participaciones = pDao.cargarParticipacion();
+        ObservableList<Participacion>participaciones = partiDao.cargarParticipacion();
         tvTabla.setItems(participaciones);
         gEquipoModificar =null;
     }
@@ -265,7 +275,7 @@ public class ControlPrincipal implements Initializable{
     public void initialize(URL arg0, ResourceBundle arg1) {
 
         cbBusqueda.getItems().addAll(campos);
-        ObservableList<Participacion>participaciones = pDao.cargarParticipacion();
+        ObservableList<Participacion>participaciones = partiDao.cargarParticipacion();
         cargarTabla(participaciones);
     }
 

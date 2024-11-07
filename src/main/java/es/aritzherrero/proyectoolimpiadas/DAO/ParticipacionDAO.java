@@ -10,9 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ParticipacionDAO {
-    
     private ConexionBD conexion;
     private PrincipalDAO principal;
+
+    public ParticipacionDAO() throws SQLException {
+        conexion= new ConexionBD();
+        principal= new PrincipalDAO();
+
+    }
     /**
      * Carga todos los registros de la tabla Participacion.
      * @return ObservableList con Participacion

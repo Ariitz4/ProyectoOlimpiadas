@@ -2,6 +2,7 @@ package es.aritzherrero.proyectoolimpiadas.Control;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import es.aritzherrero.proyectoolimpiadas.DAO.DeportistaDAO;
@@ -68,10 +69,16 @@ public class ControlDeportista implements Initializable{
     private TableView<Deportista> tvTabla;
 
     // VARIABLES DE CLASE INSERTADAS MANUALMENTE \\
-    private PrincipalDAO pDao = new PrincipalDAO();
-    private DeportistaDAO distaDao= new DeportistaDAO();
+    private PrincipalDAO pDao;
+    private DeportistaDAO distaDao;
     private String[]campos = {"Nombre","Sexo","Peso","Altura"};
     static Deportista gDepModificar;
+
+    public ControlDeportista() throws SQLException {
+        distaDao= new DeportistaDAO();
+        pDao = new PrincipalDAO();
+    }
+
 
     /**
      * Abre la ventana para añadir Deportistas

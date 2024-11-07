@@ -1,6 +1,7 @@
 package es.aritzherrero.proyectoolimpiadas.Control;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
@@ -31,12 +32,19 @@ public class ControlAniadirEvento implements Initializable{
     @FXML
     private TextField tfNombre;
 
-    private PrincipalDAO pDao = new PrincipalDAO();
-    private OlimpiadaDAO oDao = new OlimpiadaDAO();
-    private EventoDAO eDao = new EventoDAO();
-    private DeporteDAO dDao = new DeporteDAO();
+    private PrincipalDAO pDao;
+    private OlimpiadaDAO oDao ;
+    private EventoDAO eDao;
+    private DeporteDAO dDao;
     private Evento eve;
     private boolean modificar;
+
+    public ControlAniadirEvento() throws SQLException {
+        dDao = new DeporteDAO();
+        eDao = new EventoDAO();
+        oDao = new OlimpiadaDAO();
+        pDao = new PrincipalDAO();
+    }
 
 
     /**

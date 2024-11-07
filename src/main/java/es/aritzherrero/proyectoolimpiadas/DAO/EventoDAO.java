@@ -12,6 +12,11 @@ import java.sql.SQLException;
 public class EventoDAO {
     private ConexionBD conexion;
     private PrincipalDAO principal;
+
+    public EventoDAO() throws SQLException {
+        conexion= new ConexionBD();
+        principal= new PrincipalDAO();
+    }
     /**
      * Carga todos los registros de la tabla Evento.
      * @return lista de eventos.

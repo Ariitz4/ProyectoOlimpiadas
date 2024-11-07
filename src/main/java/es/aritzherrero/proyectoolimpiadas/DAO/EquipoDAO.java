@@ -14,6 +14,12 @@ public class EquipoDAO {
     private ConexionBD conexion;
     private PrincipalDAO principal;
 
+    public EquipoDAO() throws SQLException {
+        conexion= new ConexionBD();
+        principal= new PrincipalDAO();
+    }
+    /**
+
     /**
      * Añade a la BBDD la olimpiada del parámetro.
      * @param eq
