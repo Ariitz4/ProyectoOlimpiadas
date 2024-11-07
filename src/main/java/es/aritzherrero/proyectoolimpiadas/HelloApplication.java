@@ -30,11 +30,11 @@ public class HelloApplication extends Application {
         // Cargar el archivo FXML que contiene la definición de la interfaz gráfica
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("fxml/ventanaPrincipal.fxml"));
         // Crear una nueva escena con el contenido cargado desde el archivo FXML
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        Scene scene = new Scene(fxmlLoader.load());
 
         //Tamaño minimo de la ventana
-        stage.setMinHeight(620);
-        stage.setMinWidth(830);
+        stage.setMinHeight(1000);
+        stage.setMinWidth(1200);
 
         // Establecer el título e icono de la ventana
         stage.setTitle("Ejercicio G");
