@@ -1,39 +1,58 @@
 package es.aritzherrero.proyectoolimpiadas;
 
-import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 
 
-public class HelloApplication extends Application{
+/**
+ * Clase principal de la aplicación JavaFX.
+ * Carga la interfaz gráfica (FXML) y lanza la aplicación.
 
-    FlowPane root;
+ *
+ * @author Aritz
+ */
+public class HelloApplication extends Application {
 
+    /**
+     * Procedimiento principal de la aplicación JavaFX que configura y muestra la ventana principal.
+     *
+     * @param stage
+     * @throws IOException
+     */
     @Override
-    public void start(Stage stage) throws Exception {
-        try {
-            root = (FlowPane)FXMLLoader.load(getClass().getResource("fxml/ventanaPrincipal.fxml"));
-            stage.setTitle("OLIMPIADAS");
-            Scene scene = new Scene(root,1000,600);
-            stage.setScene(scene);
-            stage.setMinWidth(1000);
-            stage.setMinHeight(700);
-            stage.setMaxWidth(1000);
-            stage.setMaxHeight(700);
-            stage.getIcons().add(new Image(getClass().getResource("/img/imgOlimpiadas.png.jpg").toString()));
-            stage.show();
-        }catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public static void main(String[] args) {
-        launch(args);
+    public void start(Stage stage) throws IOException {
+        // Cargar el archivo FXML que contiene la definición de la interfaz gráfica
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("fxml/ventanaPrincipal.fxml"));
+        // Crear una nueva escena con el contenido cargado desde el archivo FXML
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+
+        //Tamaño minimo de la ventana
+        stage.setMinHeight(620);
+        stage.setMinWidth(830);
+
+        // Establecer el título e icono de la ventana
+        stage.setTitle("Ejercicio G");
+        Image icono= new Image(getClass().getResourceAsStream("/imagen/agenda.png"));
+        stage.getIcons().add(icono);
+
+        // Asignar la escena al stage y mostrar la ventana
+        stage.setScene(scene);
+        stage.show();
     }
 
+    /**
+     * Procedimiento main que lanza la aplicación JavaFX.
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        // Iniciar la aplicación
+        launch();
+    }
 }

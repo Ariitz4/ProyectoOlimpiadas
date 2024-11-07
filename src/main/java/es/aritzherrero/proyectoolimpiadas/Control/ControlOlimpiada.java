@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import es.aritzherrero.proyectoolimpiadas.DAO.OlimpiadaDAO;
 import es.aritzherrero.proyectoolimpiadas.DAO.PrincipalDAO;
+import es.aritzherrero.proyectoolimpiadas.HelloApplication;
 import es.aritzherrero.proyectoolimpiadas.Modelo.Olimpiada;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -147,9 +148,9 @@ public class ControlOlimpiada implements Initializable{
     private void ventanaSecundaria(String f, String t,Integer altura,Integer anchura) {
         Stage stage = new Stage();
         try {
-            FlowPane root = (FlowPane)FXMLLoader.load(getClass().getResource("/fxml/"+f+".fxml"));
+            FlowPane flwPanel = FXMLLoader.load(HelloApplication.class.getResource("fxml/"+f+".fxml"));
             stage.setTitle(t);
-            Scene scene = new Scene(root,altura,anchura);
+            Scene scene = new Scene(flwPanel,altura,anchura);
             stage.setScene(scene);
             stage.setMinWidth(altura);
             stage.setMinHeight(anchura);

@@ -16,7 +16,13 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-public class ControlAniadirDeportista implements Initializable{
+/**
+ * Controlador para gestionar la ventana de añadir y modificar deportistas.
+ * Esta clase permite añadir un nuevo deportista a la base de datos o modificar uno existente.
+ * Además, valida los datos ingresados por el usuario y muestra mensajes de éxito o error
+ * según el resultado de la operación.
+ */
+public class ControlAniadirDeportista implements Initializable {
 
     @FXML
     private ImageView imgImagen;
@@ -45,86 +51,117 @@ public class ControlAniadirDeportista implements Initializable{
     private Deportista d;
 
     /**
-     * Al pulsar el botón genera un deportista y lo añade en la base de datos.
-     * @param event
-     * @throws Throwable
+     * Procedimiento que procesa los datos ingresados para añadir o modificar un deportista en la base de datos.
+     * Si el modo modificar está activo, actualiza un deportista existente; de lo contrario,
+     * añade uno nuevo. Muestra mensajes de error en caso de que los datos ingresados sean incorrectos.
+     *
+     * @param event evento de acción generado al pulsar el botón de aceptar.
+     * @throws Throwable si ocurre un error inesperado durante la operación.
      */
     @FXML
     void Aceptar(ActionEvent event) throws Throwable {
 
-        String errores = "";
-        try{
+        String errores = "";  // Cadena para almacenar mensajes de error
+        try {
+            // Genera un nuevo ID para el deportista si es una inserción
             int nId = pDao.generarId("Deportista");
+
+            // Obtiene el nombre y el sexo ingresado por el usuario
             String sNombre = tfNombre.getText();
-            Character cSexo;
-            if (rbM.isSelected()) {
-                cSexo = 'M';
-            }else {
-                cSexo = 'F';
+            Character cSexo = rbM.isSelected() ? 'M' : 'F';
+
+            // Variables para almacenar el peso y la altura ingresados
+            Integer nPeso = 0, nAltura = 0;
+
+            // Intenta convertir el peso y la altura a enteros; agrega errores en caso de fallos
+            try {
+                nPeso = Integer.parseInt(tfPeso.getText());
+            } catch (Exception e) {
+                errores += "El campo Peso debe tener un número entero positivo.\n";
             }
-            Integer nPeso = 0,nAltura = 0;
-            try {nPeso = Integer.parseInt(tfPeso.getText());}catch(Exception e) {errores+="El campo Peso debe tener un número entero positivo.\n";}
-            try{nAltura = Integer.parseInt(tfAltura.getText());}catch(Exception e) {errores+="El campo Altura debe tener un número entero positivo.\n";}
+            try {
+                nAltura = Integer.parseInt(tfAltura.getText());
+            } catch (Exception e) {
+                errores += "El campo Altura debe tener un número entero positivo.\n";
+            }
+
+            // Muestra los errores de validación si existen
             if (!errores.equals("")) {
                 ControlPrincipal.ventanaAlerta("E", errores);
-            }else {
+            } else {
                 boolean resultado = false;
-                if(!modificar) {
+                if (!modificar) {
+                    // Añade un nuevo deportista
                     Deportista subd = new Deportista(nId, sNombre, cSexo, nPeso, nAltura);
                     resultado = distaDao.aniadirDeportista(subd);
-                }else {
+                } else {
+                    // Modifica el deportista existente
                     Deportista subd = new Deportista(d.getIdDeportista(), sNombre, cSexo, nPeso, nAltura);
                     resultado = distaDao.modificarDeportista(subd);
                 }
+
+                // Muestra el mensaje de éxito o error según el resultado de la operación
                 if (resultado) {
                     ControlPrincipal.ventanaAlerta("I", "Deportista añadido con éxito");
-                    Cancelar(event);
-                }else {
+                    Cancelar(event); // Cierra la ventana tras el éxito
+                } else {
                     ControlPrincipal.ventanaAlerta("E", "Error al añadir Deportista");
                 }
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             ControlPrincipal.ventanaAlerta("E", "Los campos nombre y sexo son obligatorios");
         }
     }
 
     /**
-     * Cierra la ventana
-     * @param event
-     * @throws Throwable
+     * Procedimiento que cancela la operación actual y cierra la ventana.
+     *
+     * @param event evento de acción generado al pulsar el botón de cancelar.
+     * @throws Throwable si ocurre un error inesperado durante la operación.
      */
     @FXML
     void Cancelar(ActionEvent event) throws Throwable {
-        Node node = (Node)event.getSource();
+        // Cierra la ventana actual
+        Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
-        d=null;
+        d = null; // Limpia el objeto deportista antes de cerrar
         stage.close();
     }
 
     /**
-     * Al iniciar, comprueba si se le llamó para modificar o añadir, y guarda el deportista.
+     * Procedimiento de inicialización del controlador.
+     * Al iniciar, comprueba si el controlador ha sido invocado para modificar un deportista,
+     * cargando los datos correspondientes en la ventana.
+     *
+     * @param arg0 URL para la localización de recursos.
+     * @param arg1 Bundle de recursos para la inicialización.
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         modificar = false;
 
         try {
+            // Intenta cargar el deportista a modificar
             d = ControlDeportista.gDepModificar;
             mostrarDatosModificar(d);
-            modificar = true;
-        }catch(Exception e) {}
+            modificar = true; // Activa el modo de modificación
+        } catch (Exception e) {
+            // Manejo silencioso de excepciones en caso de que no haya un deportista a modificar
+        }
     }
 
     /**
-     * Muestra los datos del deportista en la ventana.
-     * @param d Deportista
+     * Procedimiento que muestra los datos del deportista a modificar en la ventana.
+     *
+     * @param d Deportista cuyos datos serán mostrados.
      */
     private void mostrarDatosModificar(Deportista d) {
+        // Establece los valores del deportista en los campos de la interfaz
         tfNombre.setText(d.getNombre());
         if (d.getSexo().equals('F')) {
             rdF.setSelected(true);
-        }else {
+        } else {
             rbM.setSelected(true);
         }
         tfPeso.setText(d.getPeso().toString());
