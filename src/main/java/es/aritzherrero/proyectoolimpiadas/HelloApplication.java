@@ -1,23 +1,39 @@
 package es.aritzherrero.proyectoolimpiadas;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 
-public class HelloApplication extends Application {
+
+public class HelloApplication extends Application{
+
+    FlowPane root;
+
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage stage) throws Exception {
+        try {
+            root = (FlowPane)FXMLLoader.load(getClass().getResource("/fxml/VentanaGeneral.fxml"));
+            stage.setTitle("OLIMPIADAS");
+            Scene scene = new Scene(root,1000,600);
+            stage.setScene(scene);
+            stage.setMinWidth(1000);
+            stage.setMinHeight(700);
+            stage.setMaxWidth(1000);
+            stage.setMaxHeight(700);
+            stage.getIcons().add(new Image(getClass().getResource("/img/imgOlimpiadas.png.jpg").toString()));
+            stage.show();
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void main(String[] args) {
+        launch(args);
     }
 
-    public static void main(String[] args) {
-        launch();
-    }
 }
