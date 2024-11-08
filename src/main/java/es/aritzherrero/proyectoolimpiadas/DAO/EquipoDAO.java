@@ -75,7 +75,6 @@ public class EquipoDAO {
     private ObservableList<Equipo> crearListaEquipo(String consulta) {
         ObservableList<Equipo> listaDeporte= FXCollections.observableArrayList();
         try {
-            conexion = new ConexionBD();
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {

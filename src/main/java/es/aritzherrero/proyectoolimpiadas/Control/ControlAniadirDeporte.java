@@ -1,9 +1,11 @@
 package es.aritzherrero.proyectoolimpiadas.Control;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import es.aritzherrero.proyectoolimpiadas.DAO.DeporteDAO;
+import es.aritzherrero.proyectoolimpiadas.DAO.DeportistaDAO;
 import es.aritzherrero.proyectoolimpiadas.DAO.PrincipalDAO;
 import es.aritzherrero.proyectoolimpiadas.Modelo.Deporte;
 import javafx.event.ActionEvent;
@@ -27,6 +29,11 @@ public class ControlAniadirDeporte implements Initializable {
     private PrincipalDAO pDao;
     private Deporte d;
     private boolean modificar;
+
+    public ControlAniadirDeporte() throws SQLException {
+        dDao = new DeporteDAO();
+        pDao = new PrincipalDAO();
+    }
 
     /**
      * Procedimiento que acepta y procesa los datos ingresados para añadir o modificar

@@ -1,8 +1,10 @@
 package es.aritzherrero.proyectoolimpiadas.Control;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import es.aritzherrero.proyectoolimpiadas.DAO.DeportistaDAO;
 import es.aritzherrero.proyectoolimpiadas.DAO.EquipoDAO;
 import es.aritzherrero.proyectoolimpiadas.DAO.PrincipalDAO;
 import es.aritzherrero.proyectoolimpiadas.Modelo.Equipo;
@@ -32,6 +34,10 @@ public class ControlAniadirEquipo implements Initializable {
     private Equipo eq;
     private boolean modificar;
 
+    public ControlAniadirEquipo() throws SQLException {
+        eDao = new EquipoDAO();
+        pDao = new PrincipalDAO();
+    }
     /**
      * Procedimiento que procesa los datos ingresados para añadir o modificar un equipo en la base de datos.
      * Si el modo de modificación está activado, actualiza un equipo existente; en caso contrario,

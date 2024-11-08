@@ -26,10 +26,11 @@ public class ConexionBD {
         connConfig.setProperty("user", "root");
         connConfig.setProperty("password", "mypass");
         //la conexion en sí
-        conexion = DriverManager.getConnection("jdbc:mariadb://localhost:33066/personas?serverTimezone=Europe/Madrid", connConfig);
+        conexion = DriverManager.getConnection("jdbc:mysql://localhost:33066/olimpiadas?serverTimezone=Europe/Madrid", connConfig);
         conexion.setAutoCommit(true);
         DatabaseMetaData databaseMetaData = conexion.getMetaData();
         //debug
+        /*
         System.out.println();
         System.out.println("--- Datos de conexión ------------------------------------------");
         System.out.printf("Base de datos: %s%n", databaseMetaData.getDatabaseProductName());
@@ -38,7 +39,7 @@ public class ConexionBD {
         System.out.printf("  Versión: %s%n", databaseMetaData.getDriverVersion());
         System.out.println("----------------------------------------------------------------");
         System.out.println();
-        conexion.setAutoCommit(true);
+        conexion.setAutoCommit(true);*/
     }
 
     /**

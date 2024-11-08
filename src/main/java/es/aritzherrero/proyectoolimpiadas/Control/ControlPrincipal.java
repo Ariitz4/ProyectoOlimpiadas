@@ -306,6 +306,7 @@ public class ControlPrincipal implements Initializable{
     private void ventanaSecundaria(String f, String t,Integer altura,Integer anchura) {
         Stage stage = new Stage();
         try {
+            System.out.println("fxml/"+f+".fxml");
             FlowPane flwPanel = FXMLLoader.load(HelloApplication.class.getResource("fxml/"+f+".fxml"));
             stage.setTitle(t);
             Scene scene = new Scene(flwPanel,altura,anchura);
@@ -314,7 +315,6 @@ public class ControlPrincipal implements Initializable{
             stage.setMinHeight(altura);
             stage.setMaxWidth(anchura);
             stage.setMaxHeight(altura);
-            stage.getIcons().add(new Image(getClass().getResource("/img/imgOlimpiadas.jpg").toString()));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         }catch(IOException e) {

@@ -76,7 +76,6 @@ public class OlimpiadaDAO {
     private ObservableList<Olimpiada> crearListaOlimpiada(String consulta) {
         ObservableList<Olimpiada> listaOlimpiada= FXCollections.observableArrayList();
         try {
-            conexion = new ConexionBD();
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {

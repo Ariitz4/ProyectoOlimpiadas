@@ -133,7 +133,6 @@ public class ParticipacionDAO {
             conexion.CloseConexion();
         }catch(SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException(e);
         }
         return listaParticipacion;
     }

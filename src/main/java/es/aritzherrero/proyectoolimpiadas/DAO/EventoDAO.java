@@ -73,7 +73,6 @@ public class EventoDAO {
     private ObservableList<Evento> crearListaEvento(String consulta) {
         ObservableList<Evento> listaEvento= FXCollections.observableArrayList();
         try {
-            conexion = new ConexionBD();
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {

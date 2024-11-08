@@ -244,7 +244,7 @@ public class ControlEvento implements Initializable {
             Scene scene = new Scene(flwPanel, anchura, altura);
             stage.setScene(scene);
             stage.setTitle(t);
-            stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("icon.png")));
+
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (IOException e) {

@@ -43,7 +43,6 @@ public class PrincipalDAO {
         Integer nId = 0;
         String consulta = "SELECT COUNT(*) FROM " + tabla + ";";
         try {
-            conexion = new ConexionBD();
             PreparedStatement ps = conexion.getConexion().prepareStatement(consulta);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -58,7 +57,6 @@ public class PrincipalDAO {
 
     public boolean ejecutarConsulta(String consulta) {
         try {
-            conexion = new ConexionBD();
             PreparedStatement ps = conexion.getConexion().prepareStatement(consulta);
             int i = ps.executeUpdate(consulta);
             conexion.CloseConexion();
@@ -86,7 +84,6 @@ public class PrincipalDAO {
         String consulta = "SELECT COUNT(*) FROM "+tabla+" WHERE "+campo+" ='"+ID+"';";
         int resp=0;
         try {
-            conexion = new ConexionBD();
             PreparedStatement ps = conexion.getConexion().prepareStatement(consulta);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

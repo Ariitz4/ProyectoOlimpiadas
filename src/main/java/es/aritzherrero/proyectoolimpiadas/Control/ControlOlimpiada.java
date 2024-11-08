@@ -176,7 +176,6 @@ public class ControlOlimpiada implements Initializable {
             stage.setMinHeight(anchura);
             stage.setMaxWidth(altura);
             stage.setMaxHeight(anchura);
-            stage.getIcons().add(new Image(getClass().getResource("/img/imgOlimpiadas.jpg").toString()));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (IOException e) {

@@ -1,6 +1,7 @@
 package es.aritzherrero.proyectoolimpiadas.Control;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import es.aritzherrero.proyectoolimpiadas.DAO.DeportistaDAO;
@@ -50,6 +51,10 @@ public class ControlAniadirDeportista implements Initializable {
     private boolean modificar;
     private Deportista d;
 
+    public ControlAniadirDeportista() throws SQLException {
+        distaDao = new DeportistaDAO();
+        pDao = new PrincipalDAO();
+    }
     /**
      * Procedimiento que procesa los datos ingresados para añadir o modificar un deportista en la base de datos.
      * Si el modo modificar está activo, actualiza un deportista existente; de lo contrario,
